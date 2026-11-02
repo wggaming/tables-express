@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"></head><body>
+<title>Tables Express</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
+<style>
+/* Layout: une carte centrée, trois écrans (menu, jeu, résultats). Chrono en barre qui se vide en haut du jeu. */
+:root {
+  --bg: #e9efff;
+  --card: #ffffff;
+  --ink: #1b2150;
+  --muted: #5d6598;
+  --violet: #6c4dff;
+  --coral: #ff5a5f;
+  --sun: #ffc83d;
+  --mint: #12b886;
+  --line: #d5dcf5;
+  --key: #f3f5ff;
+  --display: "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
+  --body: "Nunito", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12153a; --card: #1d2252; --ink: #f1f3ff; --muted: #a2a9dc;
+    --violet: #8f78ff; --coral: #ff7b7f; --sun: #ffd25e; --mint: #3fd5a6;
+    --line: #333a7a; --key: #272e68; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12153a; --card: #1d2252; --ink: #f1f3ff; --muted: #a2a9dc;
+  --violet: #8f78ff; --coral: #ff7b7f; --sun: #ffd25e; --mint: #3fd5a6;
+  --line: #333a7a; --key: #272e68; color-scheme: dark;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--body); font-weight: 600; font-size: 17px;
+  padding-block: 16px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  min-height: 100%; user-select: none; -webkit-user-select: none;
+}
+h1, h2, .big { font-family: var(--display); font-weight: 800; margin: 0; text-wrap: balance; }
+button { font: inherit; color: inherit; cursor: pointer; border: 0; }
+button:focus-visible { outline: 3px solid var(--violet); outline-offset: 2px; }
+.wrap { max-width: 480px; margin: 0 auto; }
+.card { background: var(--card); border-radius: 24px; padding: 20px; box-shadow: 0 6px 0 var(--line); }
+[hidden] { display: none !important; }
+
+/* Menu */
+.logo { font-size: 44px; line-height: 1; color: var(--violet); }
+.logo span { color: var(--coral); }
+.sub { color: var(--muted); margin: 6px 0 18px; }
+.label { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 800; margin: 0 0 8px; }
+.chips { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.chip { background: var(--key); border-radius: 14px; padding: 12px 0; font-family: var(--display); font-weight: 800; font-size: 22px; box-shadow: 0 3px 0 var(--line); }
+.chip[aria-pressed="true"] { background: var(--violet); color: #fff; box-shadow: 0 3px 0 rgba(0,0,0,.25); }
+.row { display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin: 12px 0 18px; }
+.link { background: none; color: var(--violet); text-decoration: underline; padding: 6px 2px; font-weight: 800; }
+.rules { margin: 0 0 18px; padding: 0; list-style: none; display: grid; gap: 6px; color: var(--muted); font-size: 15px; }
+.rules b { color: var(--ink); }
+.cta { width: 100%; background: var(--coral); color: #fff; font-family: var(--display); font-weight: 800; font-size: 28px; padding: 14px; border-radius: 18px; box-shadow: 0 5px 0 rgba(0,0,0,.22); }
+.cta:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(0,0,0,.22); }
+.cta:disabled { opacity: .45; }
+.best { text-align: center; margin-top: 14px; color: var(--muted); }
+.best b { color: var(--ink); font-family: var(--display); font-size: 22px; }
+
+/* Jeu */
+.hud { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; margin-bottom: 10px; }
+.hud .stat { font-family: var(--display); font-weight: 800; font-size: 22px; line-height: 1; }
+.hud .stat small { display: block; font-family: var(--body); font-size: 12px; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.hud .stat.r { text-align: right; }
+.clock { font-family: var(--display); font-weight: 800; font-size: 44px; line-height: 1; min-width: 3ch; text-align: center; font-variant-numeric: tabular-nums; position: relative; }
+.clock.low { color: var(--coral); animation: pulse .5s infinite alternate; }
+@keyframes pulse { to { transform: scale(1.15); } }
+.float { position: absolute; left: 50%; top: -6px; transform: translateX(-50%); font-size: 20px; pointer-events: none; animation: rise .9s forwards; white-space: nowrap; }
+.float.good { color: var(--mint); } .float.bad { color: var(--coral); }
+@keyframes rise { to { transform: translate(-50%, -26px); opacity: 0; } }
+.bar { height: 14px; background: var(--line); border-radius: 99px; overflow: hidden; margin-bottom: 14px; }
+.bar > i { display: block; height: 100%; width: 100%; background: var(--violet); border-radius: 99px; transform-origin: left; }
+.bar > i.low { background: var(--coral); }
+.stage { text-align: center; }
+.combo { height: 28px; font-weight: 800; color: var(--sun); font-size: 18px; text-shadow: 0 1px 0 rgba(0,0,0,.25); }
+.q { font-size: clamp(56px, 18vw, 84px); line-height: 1.05; margin: 2px 0 6px; font-variant-numeric: tabular-nums; }
+.q .x { color: var(--coral); }
+.speed { height: 8px; max-width: 220px; margin: 0 auto 12px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.speed > i { display: block; height: 100%; width: 100%; background: var(--sun); transform-origin: left; }
+.ans { font-family: var(--display); font-weight: 800; font-size: 52px; min-height: 70px; line-height: 70px; max-width: 220px; margin: 0 auto 12px; border-radius: 18px; background: var(--key); border: 3px solid var(--line); font-variant-numeric: tabular-nums; }
+.ans.ok { background: var(--mint); color: #fff; border-color: var(--mint); }
+.ans.ko { background: var(--coral); color: #fff; border-color: var(--coral); animation: shake .35s; }
+@keyframes shake { 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+.pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.pad button { background: var(--key); border-radius: 18px; padding: 0; height: clamp(54px, 9.5vh, 68px); font-family: var(--display); font-weight: 800; font-size: 30px; box-shadow: 0 4px 0 var(--line); }
+.pad button:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--line); }
+.pad .okb { background: var(--mint); color: #fff; box-shadow: 0 4px 0 rgba(0,0,0,.22); }
+.countdown { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(18,21,58,.78); font-family: var(--display); font-weight: 800; font-size: 140px; color: #fff; z-index: 5; }
+
+/* Résultats */
+.stars { font-size: 52px; letter-spacing: 6px; color: var(--line); text-align: center; line-height: 1; }
+.stars .on { color: var(--sun); text-shadow: 0 2px 0 rgba(0,0,0,.2); }
+.title { text-align: center; font-size: 30px; color: var(--violet); margin: 6px 0 2px; }
+.final { text-align: center; font-family: var(--display); font-weight: 800; font-size: 64px; line-height: 1; margin: 6px 0; }
+.newbest { text-align: center; color: var(--coral); font-weight: 800; min-height: 24px; }
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 14px 0; }
+.tile { background: var(--key); border-radius: 14px; padding: 10px 6px; text-align: center; }
+.tile b { display: block; font-family: var(--display); font-size: 26px; line-height: 1.1; }
+.tile span { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.review { margin: 0 0 16px; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.review li { background: var(--key); border-radius: 12px; padding: 6px 12px; font-family: var(--display); font-weight: 800; font-size: 20px; }
+.review li em { font-style: normal; color: var(--coral); }
+.btns { display: grid; gap: 10px; }
+.btn2 { background: var(--key); border-radius: 18px; padding: 12px; font-family: var(--display); font-weight: 800; font-size: 20px; box-shadow: 0 4px 0 var(--line); }
+.mute { position: absolute; right: 0; top: 0; background: var(--key); border-radius: 12px; padding: 6px 10px; font-size: 14px; font-weight: 800; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
+</style>
+
+<div class="wrap">
+
+  <!-- MENU -->
+  <section class="screen card" id="menu" style="position:relative">
+    <button class="mute" id="mute" type="button" aria-label="Activer ou couper le son">Son : oui</button>
+    <h1 class="logo">Tables <span>Express</span></h1>
+    <p class="sub">Réponds vite, gagne du temps, bats ton record !</p>
+
+    <p class="label">Quelles tables veux-tu réviser ?</p>
+    <div class="chips" id="chips"></div>
+    <div class="row">
+      <button class="link" id="allBtn" type="button">Toutes les tables</button>
+      <button class="link" id="noneBtn" type="button">Tout effacer</button>
+    </div>
+
+    <ul class="rules">
+      <li><b>30 secondes</b> au départ, ça défile !</li>
+      <li>Bonne réponse : <b>+2 secondes</b>. Erreur : <b>−3 secondes</b>.</li>
+      <li>Réponds en moins de 4 secondes pour des <b>points bonus</b>, et enchaîne pour le <b>combo</b>.</li>
+    </ul>
+
+    <button class="cta" id="start" type="button">C'est parti !</button>
+    <p class="best">Meilleur score : <b id="best">0</b></p>
+  </section>
+
+  <!-- JEU -->
+  <section class="screen card" id="game" hidden>
+    <div class="hud">
+      <div class="stat"><small>Score</small><span id="score">0</span></div>
+      <div class="clock" id="clock">30</div>
+      <div class="stat r"><small>Réussies</small><span id="okc">0</span></div>
+    </div>
+    <div class="bar" aria-hidden="true"><i id="timebar"></i></div>
+    <div class="stage">
+      <div class="combo" id="combo"></div>
+      <div class="q big" id="q"></div>
+      <div class="speed" aria-hidden="true"><i id="speedbar"></i></div>
+      <div class="ans" id="ans" aria-live="polite"></div>
+    </div>
+    <div class="pad" id="pad"></div>
+  </section>
+
+  <!-- RÉSULTATS -->
+  <section class="screen card" id="end" hidden>
+    <div class="stars" id="stars" aria-hidden="true"></div>
+    <h2 class="title" id="rank"></h2>
+    <div class="final" id="final">0</div>
+    <div class="newbest" id="newbest"></div>
+    <div class="tiles">
+      <div class="tile"><b id="sOk">0</b><span>Réussies</span></div>
+      <div class="tile"><b id="sAvg">0</b><span>s par calcul</span></div>
+      <div class="tile"><b id="sCombo">0</b><span>Meilleur combo</span></div>
+    </div>
+    <div id="reviewBox">
+      <p class="label">À revoir</p>
+      <ul class="review" id="review"></ul>
+    </div>
+    <div class="btns">
+      <button class="cta" id="again" type="button">Rejouer</button>
+      <button class="btn2" id="toMenu" type="button">Changer les tables</button>
+    </div>
+  </section>
+</div>
+
+<div class="countdown" id="cd" hidden></div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var START_TIME = 30, MAX_TIME = 99, GOOD = 2, BAD = 3;
+
+  // ---------- stockage (facultatif) ----------
+  function load(k, d) { try { var v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } }
+  function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+
+  var selected = load('te-tables', [2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  var best = load('te-best', 0);
+  var soundOn = load('te-sound', true);
+
+  // ---------- son ----------
+  var actx = null;
+  function beep(freq, dur, type, vol, delay) {
+    if (!soundOn) return;
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      var t = actx.currentTime + (delay || 0);
+      var o = actx.createOscillator(), g = actx.createGain();
+      o.type = type || 'sine'; o.frequency.value = freq;
+      g.gain.setValueAtTime(vol || 0.12, t);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t + dur);
+    } catch (e) {}
+  }
+  var sfx = {
+    ok: function () { beep(660, .12, 'triangle'); beep(880, .16, 'triangle', .12, .08); },
+    fast: function () { beep(660, .1, 'triangle'); beep(880, .1, 'triangle', .12, .07); beep(1320, .2, 'triangle', .12, .14); },
+    ko: function () { beep(200, .25, 'sawtooth', .08); },
+    tick: function () { beep(520, .07, 'square', .05); },
+    go: function () { beep(880, .3, 'triangle', .15); },
+    end: function () { [523, 659, 784, 1046].forEach(function (f, i) { beep(f, .22, 'triangle', .12, i * .12); }); }
+  };
+
+  // ---------- menu ----------
+  var chips = $('chips');
+  for (var n = 1; n <= 10; n++) {
+    (function (n) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'chip'; b.textContent = n;
+      b.setAttribute('aria-pressed', selected.indexOf(n) > -1);
+      b.setAttribute('aria-label', 'Table de ' + n);
+      b.onclick = function () {
+        var i = selected.indexOf(n);
+        if (i > -1) selected.splice(i, 1); else selected.push(n);
+        refreshChips(); sfx.tick();
+      };
+      chips.appendChild(b);
+    })(n);
+  }
+  function refreshChips() {
+    Array.prototype.forEach.call(chips.children, function (b, i) {
+      b.setAttribute('aria-pressed', selected.indexOf(i + 1) > -1);
+    });
+    $('start').disabled = selected.length === 0;
+    save('te-tables', selected);
+  }
+  $('allBtn').onclick = function () { selected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; refreshChips(); };
+  $('noneBtn').onclick = function () { selected = []; refreshChips(); };
+  $('best').textContent = best;
+  $('mute').textContent = soundOn ? 'Son : oui' : 'Son : non';
+  $('mute').onclick = function () {
+    soundOn = !soundOn; save('te-sound', soundOn);
+    $('mute').textContent = soundOn ? 'Son : oui' : 'Son : non'; sfx.tick();
+  };
+  refreshChips();
+
+  function show(id) {
+    ['menu', 'game', 'end'].forEach(function (s) { $(s).hidden = s !== id; });
+    window.scrollTo(0, 0);
+  }
+
+  // ---------- pavé numérique ----------
+  var pad = $('pad');
+  ['1', '2', '3', '4', '5', '6', '7', '8', '9', '⌫', '0', 'OK'].forEach(function (k) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.textContent = k;
+    if (k === 'OK') b.className = 'okb';
+    b.setAttribute('aria-label', k === '⌫' ? 'Effacer' : k === 'OK' ? 'Valider' : k);
+    b.onclick = function () { press(k); };
+    pad.appendChild(b);
+  });
+  document.addEventListener('keydown', function (e) {
+    if ($('game').hidden) return;
+    if (e.key >= '0' && e.key <= '9') press(e.key);
+    else if (e.key === 'Backspace') press('⌫');
+    else if (e.key === 'Enter') press('OK');
+  });
+
+  // ---------- partie ----------
+  var G = null;
+  var timer = null;
+
+  function pickQuestion() {
+    // une erreur revient après 3 à 5 questions
+    if (G.retry.length && G.asked >= G.retry[0].at) {
+      var r = G.retry.shift();
+      return { a: r.a, b: r.b };
+    }
+    var a, b, key, tries = 0;
+    do {
+      a = selected[Math.floor(Math.random() * selected.length)];
+      b = 1 + Math.floor(Math.random() * 10);
+      if (Math.random() < .5) { var t = a; a = b; b = t; }
+      key = a + 'x' + b;
+      tries++;
+    } while (key === G.lastKey && tries < 12);
+    return { a: a, b: b };
+  }
+
+  function nextQuestion() {
+    var q = pickQuestion();
+    G.cur = q; G.lastKey = q.a + 'x' + q.b;
+    G.typed = ''; G.locked = false; G.qStart = performance.now();
+    $('q').innerHTML = q.a + ' <span class="x">×</span> ' + q.b;
+    $('ans').className = 'ans'; $('ans').textContent = '';
+  }
+
+  function press(k) {
+    if (!G || G.locked || G.over) return;
+    if (k === '⌫') { G.typed = G.typed.slice(0, -1); }
+    else if (k === 'OK') { if (G.typed) return check(); return; }
+    else if (G.typed.length < 3) { G.typed += k; if (G.typed === '0' && k === '0') {} }
+    $('ans').textContent = G.typed;
+    var good = String(G.cur.a * G.cur.b);
+    if (G.typed === good || G.typed.length >= good.length) check();
+  }
+
+  function floatMsg(text, cls) {
+    var f = document.createElement('div');
+    f.className = 'float ' + cls; f.textContent = text;
+    $('clock').appendChild(f);
+    setTimeout(function () { if (f.parentNode) f.parentNode.removeChild(f); }, 900);
+  }
+
+  function check() {
+    var q = G.cur, good = q.a * q.b;
+    var secs = (performance.now() - G.qStart) / 1000;
+    G.asked++;
+    G.locked = true;
+    if (parseInt(G.typed, 10) === good) {
+      G.ok++; G.streak++; G.bestCombo = Math.max(G.bestCombo, G.streak);
+      G.sumTime += secs;
+      var bonus = secs < 2 ? 10 : secs < 4 ? 5 : 0;
+      var mult = Math.min(4, 1 + Math.floor(G.streak / 5));
+      G.score += (10 + bonus) * mult;
+      G.time = Math.min(MAX_TIME, G.time + GOOD);
+      floatMsg('+' + GOOD + ' s', 'good');
+      $('ans').className = 'ans ok';
+      (bonus === 10 ? sfx.fast : sfx.ok)();
+      updateHud();
+      setTimeout(function () { if (!G.over) nextQuestion(); }, 220);
+    } else {
+      G.streak = 0;
+      G.time = Math.max(0, G.time - BAD);
+      floatMsg('−' + BAD + ' s', 'bad');
+      G.missed[q.a + 'x' + q.b] = { a: q.a, b: q.b };
+      G.retry.push({ a: q.a, b: q.b, at: G.asked + 3 + Math.floor(Math.random() * 3) });
+      $('ans').className = 'ans ko';
+      $('ans').textContent = q.a * q.b;
+      sfx.ko();
+      updateHud();
+      setTimeout(function () { if (!G.over) nextQuestion(); }, 1000);
+    }
+  }
+
+  function updateHud() {
+    $('score').textContent = G.score;
+    $('okc').textContent = G.ok;
+    var mult = Math.min(4, 1 + Math.floor(G.streak / 5));
+    $('combo').textContent = G.streak >= 3 ? 'Série de ' + G.streak + (mult > 1 ? '  ·  ×' + mult : '') : '';
+  }
+
+  function frame() {
+    var now = performance.now();
+    var dt = (now - G.last) / 1000; G.last = now;
+    if (!G.locked || true) G.time -= dt;
+    if (G.time <= 0) { G.time = 0; render(); return endGame(); }
+    render();
+  }
+  function render() {
+    var t = Math.ceil(G.time);
+    var clock = $('clock');
+    var txt = String(t);
+    var low = G.time <= 10;
+    var kids = clock.firstChild;
+    if (kids && kids.nodeType === 3) kids.nodeValue = txt; else clock.insertBefore(document.createTextNode(txt), clock.firstChild);
+    clock.classList.toggle('low', low);
+    var tb = $('timebar');
+    tb.style.transform = 'scaleX(' + Math.min(1, G.time / START_TIME) + ')';
+    tb.classList.toggle('low', low);
+    var sec = G.locked ? 4 : (performance.now() - G.qStart) / 1000;
+    $('speedbar').style.transform = 'scaleX(' + Math.max(0, 1 - sec / 4) + ')';
+    if (low && t !== G.lastTick) { G.lastTick = t; sfx.tick(); }
+  }
+
+  function startGame() {
+    if (!selected.length) return;
+    G = { time: START_TIME, score: 0, ok: 0, asked: 0, streak: 0, bestCombo: 0, sumTime: 0, retry: [], missed: {}, locked: true, over: false, last: performance.now(), lastKey: '', lastTick: -1 };
+    show('game');
+    $('clock').textContent = START_TIME;
+    updateHud();
+    $('q').textContent = ''; $('ans').textContent = ''; $('ans').className = 'ans';
+    var cd = $('cd'), n = 3;
+    cd.hidden = false; cd.textContent = n; sfx.tick();
+    var iv = setInterval(function () {
+      n--;
+      if (n > 0) { cd.textContent = n; sfx.tick(); }
+      else {
+        clearInterval(iv);
+        cd.textContent = 'Go !'; sfx.go();
+        setTimeout(function () {
+          cd.hidden = true;
+          G.last = performance.now();
+          nextQuestion();
+          timer = setInterval(frame, 50);
+        }, 450);
+      }
+    }, 700);
+  }
+
+  function endGame() {
+    clearInterval(timer); G.over = true; G.locked = true;
+    sfx.end();
+    var s = G.score;
+    var stars = s >= 250 ? 3 : s >= 130 ? 2 : s >= 50 ? 1 : 0;
+    var ranks = ['On s\'entraîne !', 'Bien joué !', 'Super rapide !', 'Championne des tables !'];
+    $('rank').textContent = ranks[stars];
+    var html = '';
+    for (var i = 0; i < 3; i++) html += '<span class="' + (i < stars ? 'on' : '') + '">★</span>';
+    $('stars').innerHTML = html;
+    $('final').textContent = s;
+    var isBest = s > best && s > 0;
+    $('newbest').textContent = isBest ? 'Nouveau record !' : (best ? 'Record à battre : ' + best : '');
+    if (isBest) { best = s; save('te-best', best); $('best').textContent = best; }
+    $('sOk').textContent = G.ok;
+    $('sAvg').textContent = G.ok ? (G.sumTime / G.ok).toFixed(1).replace('.', ',') : '–';
+    $('sCombo').textContent = G.bestCombo;
+    var list = $('review'); list.innerHTML = '';
+    var keys = Object.keys(G.missed);
+    keys.forEach(function (k) {
+      var m = G.missed[k], li = document.createElement('li');
+      li.innerHTML = m.a + ' × ' + m.b + ' = <em>' + (m.a * m.b) + '</em>';
+      list.appendChild(li);
+    });
+    $('reviewBox').hidden = keys.length === 0;
+    show('end');
+  }
+
+  $('start').onclick = startGame;
+  $('again').onclick = startGame;
+  $('toMenu').onclick = function () { show('menu'); };
+})();
+</script>
+
+</body></html>
