@@ -182,7 +182,7 @@ button:focus-visible { outline: 3px solid var(--violet); outline-offset: 2px; }
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
-  var START_TIME = 30, MAX_TIME = 99, GOOD = 2, BAD = 3;
+  var START_TIME = 60, MAX_TIME = 99, GOOD = 2, BAD = 3;
 
   // ---------- stockage (facultatif) ----------
   function load(k, d) { try { var v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } }
