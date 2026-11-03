@@ -155,6 +155,7 @@ a.cta { display: block; text-align: center; text-decoration: none; }
     <div class="lock" id="lock" hidden>
       <h2>Parties gratuites terminées</h2>
       <p>Débloque Tables Express pour toujours, parties illimitées.</p>
+      <p id="mailline"></p>
       <a class="cta" id="pay" target="_blank" rel="noopener" href="#">Débloquer</a>
       <div class="codebox">
         <input id="code" type="text" placeholder="J'ai déjà un code" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Code de déblocage">
@@ -211,7 +212,8 @@ a.cta { display: block; text-align: center; text-decoration: none; }
 (function () {
   var $ = function (id) { return document.getElementById(id); };
   // ---------- accès payant : à régler ici ----------
-  var PAYMENT_URL = '';          // lien de paiement Stripe (Payment Link), à coller entre les guillemets
+  var PAYMENT_URL = '';
+  var CONTACT_EMAIL = 'wagramconseil15@gmail.com';          // lien de paiement Stripe (Payment Link), à coller entre les guillemets
   var PRICE_LABEL = '4,99 €';    // prix affiché sur le bouton
   var FREE_PLAYS = 5;            // nombre de parties gratuites
   var SECRET = '6YKJ37B9LDYP92Q8VVHA';
@@ -229,9 +231,11 @@ a.cta { display: block; text-align: center; text-decoration: none; }
     for (var i = 0; i < 5; i++) { s = ALPHA.charAt(n % 32) + s; n = Math.floor(n / 32); }
     return s;
   }
-  function isValidCode(c) {
-    var m = /^TE-(\d{4})-([A-Z0-9]{5})$/.exec(c);
-    if (!m || REVOKED.indexOf(c) > -1) return false;
+  function isValidCode(raw) {
+    var c = String(raw).toUpperCase().replace(/[\s\-_.]/g, '');
+    var m = /^TE(\d{4})([A-Z0-9]{5})$/.exec(c);
+    if (!m) return false;
+    if (REVOKED.indexOf('TE-' + m[1] + '-' + m[2]) > -1) return false;
     return m[2] === checkPart(m[1]);
   }
 
@@ -263,8 +267,8 @@ a.cta { display: block; text-align: center; text-decoration: none; }
     $('free').textContent = unlocked ? 'Version complète débloquée' : left + (left > 1 ? ' parties gratuites restantes' : ' partie gratuite restante');
     $('free').hidden = locked;
     var pay = $('pay');
-    pay.textContent = 'Débloquer pour ' + PRICE_LABEL;
-    pay.href = PAYMENT_URL || '#';
+    if (PAYMENT_URL) { pay.textContent = 'Débloquer pour ' + PRICE_LABEL; pay.href = PAYMENT_URL; $('mailline').hidden = true; }
+    else { pay.textContent = 'Demander mon code'; pay.removeAttribute('target'); pay.href = 'mailto:wagramconseil15@gmail.com?subject=Tables%20Express%20-%20demande%20de%20code&body=Bonjour%2C%0A%0AJe%20souhaite%20recevoir%20un%20code%20pour%20d%C3%A9bloquer%20Tables%20Express.%0A%0AMon%20pr%C3%A9nom%20%3A%20'; $('mailline').textContent = 'Écris à ' + CONTACT_EMAIL + ' et je t\'envoie un code.'; }
   }
 
   // ---------- son ----------
@@ -553,7 +557,6 @@ a.cta { display: block; text-align: center; text-decoration: none; }
     else { $('codemsg').textContent = 'Ce code ne fonctionne pas. Vérifie-le et réessaie.'; sfx.ko(); }
   };
   $('code').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('codeOk').click(); });
-  $('pay').onclick = function (e) { if (!PAYMENT_URL) { e.preventDefault(); $('codemsg').textContent = 'Le lien de paiement n\'est pas encore configuré.'; } };
   try {
     var m = location.search.match(/[?&]code=([^&]+)/);
     if (m) { tryUnlock(decodeURIComponent(m[1])); history.replaceState(null, '', location.pathname); }

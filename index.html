@@ -238,7 +238,7 @@ footer a { text-underline-offset: 3px; }
     <!-- TARIF -->
     <section id="tarif">
       <p class="eyebrow">Tarif</p>
-      <h2>Essaie d'abord, paie ensuite si ça plaît.</h2>
+      <h2>Essaie d'abord, demande ton code ensuite.</h2>
       <div class="price-grid">
         <div class="plan">
           <h3>Découverte</h3>
@@ -252,13 +252,13 @@ footer a { text-underline-offset: 3px; }
         </div>
         <div class="plan main">
           <h3>Accès illimité</h3>
-          <div class="amount"><span class="js-price">4,99</span> <small>€, une seule fois</small></div>
+          <div class="amount" style="font-size:40px">Sur demande</div>
           <ul>
             <li>Parties illimitées, pour toujours</li>
             <li>Pas d'abonnement</li>
-            <li>Code de déblocage reçu après le paiement</li>
+            <li>Code envoyé par mail, valable sur 2 appareils</li>
           </ul>
-          <a class="btn" href="#" id="buy">Débloquer le jeu</a>
+          <a class="btn" href="#" id="buy">Me contacter</a>
         </div>
       </div>
     </section>
@@ -269,12 +269,12 @@ footer a { text-underline-offset: 3px; }
       <h2>Ce que les parents demandent.</h2>
       <div class="faq">
         <details>
-          <summary>Pour quel âge ?</summary>
-          <p>Le jeu a été conçu pour un enfant qui apprend ses tables. Il convient aux enfants qui découvrent ou révisent la multiplication, avec des calculs de 1 × 1 à 10 × 10.</p>
+          <summary>À qui s'adresse ce jeu ?</summary>
+          <p>Le site a été réalisé pour un enfant souhaitant réviser ses tables de façon ludique. Il convient aux enfants qui découvrent ou révisent la multiplication, avec des calculs de 1 × 1 à 10 × 10.</p>
         </details>
         <details>
-          <summary>Comment je reçois mon code après le paiement ?</summary>
-          <p>Une fois le paiement fait, écris à <a class="js-mail" href="#">l'adresse indiquée sur cette page</a> avec ton nom. Tu reçois ton code, tu le tapes dans le champ « J'ai déjà un code » du jeu et l'accès illimité s'active.</p>
+          <summary>Comment obtenir mon code ?</summary>
+          <p>Après tes 5 parties gratuites, écris-moi à <a class="js-mail" href="#">l'adresse de contact</a> avec ton prénom. Je t'envoie un code par mail, tu le tapes dans le champ « J'ai déjà un code » du jeu et l'accès illimité s'active.</p>
         </details>
         <details>
           <summary>Faut-il créer un compte ?</summary>
@@ -310,12 +310,13 @@ footer a { text-underline-offset: 3px; }
 /* À régler avant la mise en ligne */
 var PAYMENT_URL = '';          // lien de paiement Qonto
 var PRICE_LABEL = '4,99';      // prix affiché, sans le symbole €
-var CONTACT_EMAIL = '';        // adresse où écrire après le paiement
+var CONTACT_EMAIL = 'wagramconseil15@gmail.com';  // adresse où écrire pour demander un code
 
 (function () {
   Array.prototype.forEach.call(document.querySelectorAll('.js-price'), function (e) { e.textContent = PRICE_LABEL; });
   var buy = document.getElementById('buy');
-  if (PAYMENT_URL) { buy.href = PAYMENT_URL; buy.target = '_blank'; buy.rel = 'noopener'; }
+  if (PAYMENT_URL) { buy.href = PAYMENT_URL; buy.target = '_blank'; buy.rel = 'noopener'; buy.textContent = 'Débloquer le jeu'; }
+  else if (CONTACT_EMAIL) { buy.href = 'mailto:wagramconseil15@gmail.com?subject=Tables%20Express%20-%20demande%20de%20code&body=Bonjour%2C%0A%0AJe%20souhaite%20recevoir%20un%20code%20pour%20d%C3%A9bloquer%20Tables%20Express.%0A%0AMon%20pr%C3%A9nom%20%3A%20'; }
   else { buy.href = '#tarif'; }
   Array.prototype.forEach.call(document.querySelectorAll('.js-mail'), function (a) {
     if (CONTACT_EMAIL) { a.href = 'mailto:' + CONTACT_EMAIL; a.textContent = CONTACT_EMAIL; }
