@@ -214,8 +214,26 @@ a.cta { display: block; text-align: center; text-decoration: none; }
   var PAYMENT_URL = '';          // lien de paiement Stripe (Payment Link), à coller entre les guillemets
   var PRICE_LABEL = '4,99 €';    // prix affiché sur le bouton
   var FREE_PLAYS = 5;            // nombre de parties gratuites
-  var CODE_HASH = 2408063292;     // empreinte du code de déblocage (le code n'apparaît pas ici)
-  function hashCode(s) { var h = 5381; for (var i = 0; i < s.length; i++) h = (Math.imul(h, 33) + s.charCodeAt(i)) >>> 0; return h; }
+  var SECRET = '6YKJ37B9LDYP92Q8VVHA';
+  var REVOKED = [];   // codes désactivés : ajoute-les ici, entre guillemets, séparés par des virgules
+  var ALPHA = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  function cyrb53(str, seed) {
+    var h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+    for (var i = 0, ch; i < str.length; i++) { ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    return 4294967296 * (2097151 & h2) + (h1 >>> 0);
+  }
+  function checkPart(serial) {
+    var n = cyrb53(SECRET + ':' + serial, 7) % 33554432, s = '';
+    for (var i = 0; i < 5; i++) { s = ALPHA.charAt(n % 32) + s; n = Math.floor(n / 32); }
+    return s;
+  }
+  function isValidCode(c) {
+    var m = /^TE-(\d{4})-([A-Z0-9]{5})$/.exec(c);
+    if (!m || REVOKED.indexOf(c) > -1) return false;
+    return m[2] === checkPart(m[1]);
+  }
 
   var cfg = load('te-cfg', { t: 30, g: 2, b: 3 });
   var START_TIME = clamp(cfg.t, 10, 90, 30), GOOD = clamp(cfg.g, 0, 5, 2), BAD = clamp(cfg.b, 0, 10, 3), MAX_TIME = 99;
@@ -234,7 +252,7 @@ a.cta { display: block; text-align: center; text-decoration: none; }
 
   function tryUnlock(raw) {
     var c = String(raw || '').trim().toUpperCase();
-    if (c && hashCode(c) === CODE_HASH) { unlocked = true; save('te-unlock', true); refreshAccess(); return true; }
+    if (c && isValidCode(c)) { unlocked = true; save('te-unlock', true); refreshAccess(); return true; }
     return false;
   }
   function refreshAccess() {
