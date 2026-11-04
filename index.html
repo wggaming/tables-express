@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Tables Express</title>
-<meta name="description" content="Un jeu chronométré pour apprendre les tables de multiplication de 1 à 10, sur tablette, téléphone ou ordinateur. 5 parties gratuites.">
+<title>Jeux Express</title>
+<meta name="description" content="Deux jeux chronométrés pour réviser les tables de multiplication, les additions et les soustractions, sur tablette, téléphone ou ordinateur. 5 parties gratuites par jeu.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;700;800&display=swap">
 <style>
-/* Layout: page produit pour les parents. Héros à deux colonnes (texte + maquette du jeu), puis étapes, atouts, tarif, questions. */
+/* Layout: page produit pour les parents. Héros à deux colonnes (texte + maquettes des deux jeux), puis étapes, atouts, tarif, questions. */
 :root {
   --bg: #e9efff;
   --card: #ffffff;
@@ -86,6 +86,13 @@ section { padding-block: 56px; }
 .mock .q { text-align: center; font-family: var(--display); font-weight: 800; font-size: 72px; line-height: 1.05; }
 .mock .q b { color: var(--coral); }
 .mock .ans { margin: 8px auto 14px; width: 170px; height: 62px; line-height: 62px; text-align: center; border-radius: 16px; background: var(--mint); color: #fff; font-family: var(--display); font-weight: 800; font-size: 44px; }
+.mocks { display: grid; gap: 16px; justify-self: center; width: 100%; max-width: 360px; }
+.mock.m1 { transform: rotate(-2deg); }
+.mock.m2 { transform: rotate(2deg); margin-left: 24px; margin-right: -4px; }
+.mock .mname { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; font-weight: 800; color: var(--muted); margin-bottom: 8px; }
+.mock .q { font-size: 54px; }
+.mock .ans { margin: 6px auto 0; height: 52px; line-height: 52px; font-size: 36px; width: 140px; }
+.mock .ans.typing { background: var(--key); color: var(--ink); border: 3px solid var(--line); line-height: 46px; }
 .mock .pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .mock .pad span { background: var(--key); border-radius: 14px; height: 40px; display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 22px; box-shadow: 0 3px 0 var(--line); }
 .mock .pad span.ok { background: var(--mint); color: #fff; }
@@ -153,7 +160,7 @@ footer a { text-underline-offset: 3px; }
   body { font-size: 17px; }
   section { padding-block: 40px; }
   .hero { grid-template-columns: 1fr; gap: 30px; }
-  .mock { transform: none; }
+  .mock, .mock.m1, .mock.m2 { transform: none; margin-left: 0; margin-right: 0; }
   .steps, .feats, .price-grid { grid-template-columns: 1fr; }
   .band { padding-block: 28px; }
 }
@@ -164,7 +171,7 @@ footer a { text-underline-offset: 3px; }
 <div class="wrap">
 
   <header class="top">
-    <a class="brand" href="#">Tables <span>Express</span></a>
+    <a class="brand" href="#">Jeux <span>Express</span></a>
     <a class="link" href="#tarif">Tarif</a>
   </header>
 
@@ -172,26 +179,39 @@ footer a { text-underline-offset: 3px; }
     <!-- HÉROS -->
     <section class="hero" style="padding-top:24px">
       <div>
-        <h1>Les tables de multiplication, <em>chrono en main.</em></h1>
-        <p class="lead">Deux jeux rapides pour réviser les tables de multiplication, les additions et les soustractions en s'amusant, et battre son propre record.</p>
+        <h1>Tables, additions, soustractions : <em>chrono en main.</em></h1>
+        <p class="lead">Deux jeux rapides pour s'entraîner au calcul mental en s'amusant, et battre son propre record.</p>
         <div class="cta-row">
-          <a class="btn" href="jeu.html" id="play">Essayer gratuitement</a>
+          <a class="btn" href="jeu.html" id="play">Jouer aux tables</a>
+          <a class="btn" href="additions.html" id="play1">Jouer aux additions</a>
           <a class="btn alt" href="#tarif">Voir le tarif</a>
         </div>
-        <p class="note">5 parties offertes, puis 4,99 € une seule fois pour jouer sans limite. Pas de compte à créer, pas de publicité.</p>
+        <p class="note">5 parties offertes par jeu, puis 4,99 € une seule fois pour les deux jeux sans limite. Pas de compte à créer, pas de publicité.</p>
       </div>
 
-      <div class="mock" role="img" aria-label="Aperçu du jeu : la question 7 fois 8, la réponse 56 validée en vert, 24 secondes restantes">
-        <div class="hud">
-          <div class="stat"><small>Score</small>185</div>
-          <div class="clock">24</div>
-          <div class="stat r"><small>Réussies</small>11</div>
+      <div class="mocks" role="img" aria-label="Aperçu des deux jeux : Tables Express avec 7 fois 8 égale 56, et Calcul Express avec 45 plus 37">
+        <div class="mock m1">
+          <div class="mname">Tables Express</div>
+          <div class="hud">
+            <div class="stat"><small>Score</small>185</div>
+            <div class="clock">24</div>
+            <div class="stat r"><small>Réussies</small>11</div>
+          </div>
+          <div class="bar"><i></i></div>
+          <div class="q">7 <b>×</b> 8</div>
+          <div class="ans">56</div>
         </div>
-        <div class="bar"><i></i></div>
-        <div class="combo">Série de 6 · ×2</div>
-        <div class="q">7 <b>×</b> 8</div>
-        <div class="ans">56</div>
-        <div class="pad"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>⌫</span><span>0</span><span class="ok">OK</span></div>
+        <div class="mock m2">
+          <div class="mname">Calcul Express</div>
+          <div class="hud">
+            <div class="stat"><small>Score</small>140</div>
+            <div class="clock">17</div>
+            <div class="stat r"><small>Réussies</small>9</div>
+          </div>
+          <div class="bar"><i style="width:56%"></i></div>
+          <div class="q">45 <b>+</b> 37</div>
+          <div class="ans typing">8</div>
+        </div>
       </div>
     </section>
 
@@ -283,7 +303,7 @@ footer a { text-underline-offset: 3px; }
             <li>Tables de 1 à 10, additions et soustractions</li>
             <li>Tous les réglages</li>
           </ul>
-          <a class="btn alt" href="jeu.html">Jouer maintenant</a>
+          <a class="btn alt" href="#jeux">Jouer maintenant</a>
         </div>
         <div class="plan main">
           <h3>Accès illimité</h3>
@@ -305,12 +325,12 @@ footer a { text-underline-offset: 3px; }
       <h2>Ce que les parents demandent.</h2>
       <div class="faq">
         <details>
-          <summary>À qui s'adresse ce jeu ?</summary>
-          <p>Le site a été réalisé pour un enfant souhaitant réviser ses tables de façon ludique. Il convient aux enfants qui découvrent ou révisent la multiplication, avec des calculs de 1 × 1 à 10 × 10.</p>
+          <summary>À qui s'adresse ce site ?</summary>
+          <p>Le site a été réalisé pour un enfant souhaitant réviser ses tables de façon ludique. Il propose deux jeux : Tables Express (multiplications de 1 × 1 à 10 × 10) et Calcul Express (additions et soustractions jusqu'à 100). Ils conviennent aux enfants qui découvrent ou révisent le calcul.</p>
         </details>
         <details>
           <summary>Comment obtenir mon code ?</summary>
-          <p>L'accès illimité coûte 4,99 €, une seule fois. Clique sur « Débloquer le jeu », indique ton nom et ton adresse mail, puis fais ton paiement. Une fois le paiement reçu, ton code t'est envoyé par mail. Tu le tapes dans le champ « J'ai déjà un code » du jeu et l'accès illimité s'active. Un souci ? Écris-moi à <a class="js-mail" href="#">l'adresse de contact</a>.</p>
+          <p>L'accès illimité coûte 4,99 €, une seule fois. Clique sur « Débloquer les deux jeux », indique ton nom et ton adresse mail, puis fais ton paiement. Une fois le paiement reçu, ton code t'est envoyé par mail. Tu le tapes dans le champ « J'ai déjà un code » du jeu et l'accès illimité s'active. Un souci ? Écris-moi à <a class="js-mail" href="#">l'adresse de contact</a>.</p>
         </details>
         <details>
           <summary>Faut-il créer un compte ?</summary>
@@ -333,12 +353,12 @@ footer a { text-underline-offset: 3px; }
 
     <section class="final">
       <h2>Prêt à battre le chrono ?</h2>
-      <a class="btn" href="jeu.html" id="play2">Essayer gratuitement</a>
+      <a class="btn" href="#jeux" id="play2">Choisir un jeu</a>
     </section>
   </main>
 
   <footer>
-    <p>Tables Express · <a class="js-mail" href="#">Nous contacter</a></p>
+    <p>Jeux Express · <a class="js-mail" href="#">Nous contacter</a></p>
   </footer>
 </div>
 
@@ -351,7 +371,7 @@ var CONTACT_EMAIL = 'wagramconseil15@gmail.com';  // adresse où écrire pour de
 (function () {
   Array.prototype.forEach.call(document.querySelectorAll('.js-price'), function (e) { e.textContent = PRICE_LABEL; });
   var buy = document.getElementById('buy');
-  if (PAYMENT_URL) { buy.href = 'acheter.html'; buy.textContent = 'Débloquer le jeu'; }
+  if (PAYMENT_URL) { buy.href = 'acheter.html'; buy.textContent = 'Débloquer les deux jeux'; }
   else if (CONTACT_EMAIL) { buy.href = 'mailto:wagramconseil15@gmail.com?subject=Tables%20Express%20-%20demande%20de%20code&body=Bonjour%2C%0A%0AJe%20souhaite%20recevoir%20un%20code%20pour%20d%C3%A9bloquer%20Tables%20Express.%0A%0AMon%20pr%C3%A9nom%20%3A%20'; }
   else { buy.href = '#tarif'; }
   Array.prototype.forEach.call(document.querySelectorAll('.js-mail'), function (a) {
