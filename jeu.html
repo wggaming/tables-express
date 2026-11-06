@@ -161,7 +161,7 @@ a.cta { display: block; text-align: center; text-decoration: none; }
       <h2>Parties gratuites terminées</h2>
       <p>Débloque les deux jeux, Tables Express et Calcul Express, pour toujours : 4,99 €, une seule fois.</p>
       <p id="mailline"></p>
-      <a class="cta" id="pay" target="_blank" rel="noopener" href="#">Débloquer</a>
+      <a class="cta" id="pay" target="_blank" rel="noopener" href="#" onclick="track('clic-debloquer-jeu')">Débloquer</a>
       <div class="codebox">
         <input id="code" type="text" placeholder="J'ai déjà un code" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Code de déblocage">
         <button id="codeOk" type="button">Valider</button>
@@ -506,6 +506,7 @@ a.cta { display: block; text-align: center; text-decoration: none; }
     if (!selected.length) return;
     if (!unlocked && plays >= FREE_PLAYS) { show('menu'); refreshAccess(); return; }
     if (!unlocked) { plays++; save('te-plays', plays); }
+    track('partie-tables' + (unlocked ? '-payant' : '-gratuit'));
     G = { time: START_TIME, score: 0, ok: 0, asked: 0, streak: 0, bestCombo: 0, sumTime: 0, retry: [], missed: {}, locked: true, over: false, last: performance.now(), lastKey: '', lastTick: -1 };
     show('game');
     $('clock').textContent = START_TIME;
@@ -575,4 +576,6 @@ a.cta { display: block; text-align: center; text-decoration: none; }
 })();
 </script>
 
+<p style="text-align:center;font-size:13px;margin:18px 0 24px"><a href="legal.html" style="color:inherit;opacity:.7">Mentions légales, CGV, confidentialité</a></p>
+<script src="stats.js"></script>
 </body></html>

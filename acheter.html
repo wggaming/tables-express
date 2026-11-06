@@ -62,7 +62,11 @@ input:focus-visible { outline: 3px solid var(--violet); outline-offset: 1px; }
 
       <label class="check" for="ok" style="font-weight:600">
         <input id="ok" type="checkbox" required>
-        <span>J'accepte que mon nom et mon adresse mail servent uniquement à m'envoyer mon code de déblocage.</span>
+        <span>J'accepte que mon nom et mon adresse mail servent uniquement à m'envoyer mon code de déblocage (<a href="legal.html#confidentialite" target="_blank" rel="noopener">confidentialité</a>).</span>
+      </label>
+      <label class="check" for="ok2" style="font-weight:600">
+        <input id="ok2" type="checkbox" required>
+        <span>J'ai lu les <a href="legal.html#cgv" target="_blank" rel="noopener">conditions de vente</a>. Je demande l'accès immédiat à mon code et je renonce à mon droit de rétractation de 14 jours.</span>
       </label>
 
       <button class="btn" id="go" type="submit">Continuer vers le paiement</button>
@@ -75,6 +79,7 @@ input:focus-visible { outline: 3px solid var(--violet); outline-offset: 1px; }
       <li>Une fois le paiement reçu, ton code t'est envoyé par mail. Il fonctionne sur 2 appareils de ta famille.</li>
     </ol>
   </main>
+  <p style="text-align:center;font-size:13px;margin-top:16px"><a href="legal.html" style="color:inherit;opacity:.7">Mentions légales, CGV, confidentialité</a></p>
 </div>
 
 <script>
@@ -97,7 +102,7 @@ var FORM_KEY = '77a148e4-eed9-4a7d-8f58-e513b927e632';   // clé publique Web3Fo
     msg.style.color = '';
     if (nom.length < 3) { msg.textContent = 'Indique ton prénom et ton nom.'; $('nom').focus(); return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail)) { msg.textContent = 'Cette adresse mail ne semble pas valide. Vérifie-la.'; $('mail').focus(); return; }
-    if (!$('ok').checked) { msg.textContent = 'Coche la case pour continuer.'; return; }
+    if (!$('ok').checked || !$('ok2').checked) { msg.textContent = 'Coche les deux cases pour continuer.'; return; }
     if ($('botcheck').value) return;
     if (!FORM_KEY) { msg.textContent = 'Le formulaire n\'est pas encore configuré. Écris-moi à ' + CONTACT_EMAIL + '.'; return; }
 
@@ -111,11 +116,12 @@ var FORM_KEY = '77a148e4-eed9-4a7d-8f58-e513b927e632';   // clé publique Web3Fo
         from_name: 'Tables Express',
         name: nom,
         email: mail,
-        message: 'Nouvelle demande de code Tables Express.\nNom : ' + nom + '\nMail : ' + mail + '\nÀ envoyer dès réception du paiement de ' + PRICE_LABEL + '.',
+        message: 'Nouvelle demande de code Tables Express.\nNom : ' + nom + '\nMail : ' + mail + '\nConditions de vente et renonciation à la rétractation acceptées le ' + new Date().toLocaleString('fr-FR') + '.\nÀ envoyer dès réception du paiement de ' + PRICE_LABEL + '.',
         botcheck: ''
       })
     }).then(function (r) { return r.json(); }).then(function (d) {
       if (!d || !d.success) throw new Error('fail');
+      if (window.track) track('formulaire-envoye');
       $('go').textContent = 'Redirection vers le paiement…';
       window.location.href = PAYMENT_URL;
     }).catch(function () {
@@ -125,5 +131,6 @@ var FORM_KEY = '77a148e4-eed9-4a7d-8f58-e513b927e632';   // clé publique Web3Fo
   });
 })();
 </script>
+<script src="stats.js"></script>
 </body>
 </html>

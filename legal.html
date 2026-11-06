@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Informations légales</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;700;800&display=swap">
+<style>
+:root { --bg:#e9efff; --card:#fff; --ink:#1b2150; --muted:#565e92; --violet:#6c4dff; --line:#d5dcf5; --warn:#fff3c4; --warnink:#5a4300;
+  --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif; --body:"Nunito",system-ui,sans-serif; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#12153a; --card:#1d2252; --ink:#f1f3ff; --muted:#a9b0e0; --violet:#8f78ff; --line:#333a7a; --warn:#4a3d0a; --warnink:#ffe9a0; color-scheme:dark; } }
+:root[data-theme="dark"] { --bg:#12153a; --card:#1d2252; --ink:#f1f3ff; --muted:#a9b0e0; --violet:#8f78ff; --line:#333a7a; --warn:#4a3d0a; --warnink:#ffe9a0; color-scheme:dark; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--body); font-weight:600; font-size:17px; line-height:1.6;
+  padding-block:20px; padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px)); }
+.wrap { max-width:720px; margin:0 auto; }
+.back { display:inline-block; color:var(--muted); font-weight:800; font-size:15px; text-decoration:none; padding:6px 0 12px; }
+.card { background:var(--card); border-radius:24px; padding:24px; box-shadow:0 6px 0 var(--line); margin-bottom:20px; }
+h1 { font-family:var(--display); font-weight:800; font-size:34px; line-height:1.1; margin:0 0 12px; }
+h2 { font-family:var(--display); font-weight:800; font-size:26px; line-height:1.15; margin:0 0 10px; }
+h3 { font-size:18px; margin:18px 0 4px; }
+p { margin:0 0 10px; } ul { margin:0 0 10px; padding-left:22px; }
+a { color:var(--violet); text-underline-offset:3px; }
+nav.toc { display:flex; flex-wrap:wrap; gap:8px 16px; margin-bottom:16px; font-size:15px; }
+.todo { background:var(--warn); color:var(--warnink); padding:0 6px; border-radius:6px; font-weight:800; }
+.note { background:var(--warn); color:var(--warnink); border-radius:12px; padding:10px 14px; font-size:15px; margin-bottom:16px; }
+.small { color:var(--muted); font-size:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← Accueil</a>
+  <h1>Informations légales</h1>
+  <nav class="toc"><a href="#mentions">Mentions légales</a><a href="#cgv">Conditions de vente</a><a href="#confidentialite">Confidentialité</a></nav>
+
+  <div class="note" id="todo-note" hidden>Les passages surlignés en jaune sont à compléter dans le fichier <b>legal.html</b> (bloc « Identité du vendeur » en bas de la page). Ce message disparaît quand tout est rempli.</div>
+
+  <section class="card" id="mentions">
+    <h2>Mentions légales</h2>
+    <h3>Éditeur du site</h3>
+    <p><span data-f="nom"></span>, <span data-f="forme"></span><br>
+    Adresse : <span data-f="adresse"></span><br>
+    Immatriculation : <span data-f="siret"></span><br>
+    <span data-f="tva-ligne"></span>
+    Directeur de la publication : <span data-f="dirpub"></span><br>
+    Contact : <a data-f="mail-link" href="#"></a></p>
+    <h3>Hébergement</h3>
+    <p>Le site est hébergé par GitHub, Inc. (GitHub Pages), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.</p>
+    <h3>Paiement</h3>
+    <p>Les paiements sont traités par Mollie B.V. Aucune donnée bancaire ne transite par ce site.</p>
+  </section>
+
+  <section class="card" id="cgv">
+    <h2>Conditions générales de vente</h2>
+    <h3>1. Objet</h3>
+    <p>Les présentes conditions régissent la vente d'un code d'accès illimité aux jeux en ligne Tables Express et Calcul Express (« les Jeux »), proposés par l'éditeur désigné dans les mentions légales.</p>
+    <h3>2. Offre et prix</h3>
+    <p>Chaque jeu peut être essayé gratuitement 5 fois. L'accès illimité aux deux jeux est vendu <b><span class="js-price">4,99 €</span> TTC</b>, en un seul paiement, sans abonnement. Le prix est celui affiché sur le site au moment de la commande.</p>
+    <h3>3. Commande et paiement</h3>
+    <p>Le client renseigne son nom et son adresse mail, puis règle sur la page de paiement sécurisée de Mollie. La commande est confirmée à la réception du paiement.</p>
+    <h3>4. Livraison</h3>
+    <p>Le code d'accès est envoyé à l'adresse mail indiquée, après réception du paiement, dans un délai de <span data-f="delai"></span>. Si le code n'est pas arrivé, vérifier les courriers indésirables, puis écrire à l'adresse de contact.</p>
+    <h3>5. Droit d'utilisation</h3>
+    <p>Un code est destiné à un usage familial : il peut être saisi sur deux appareils appartenant au foyer de l'acheteur. Il ne doit pas être revendu ni diffusé publiquement. En cas de diffusion abusive, l'éditeur peut désactiver le code.</p>
+    <h3>6. Droit de rétractation</h3>
+    <p>Pour un contenu numérique fourni sans support matériel, le client dispose en principe de 14 jours pour se rétracter. Toutefois, en cochant la case prévue à cet effet avant le paiement, le client demande l'accès immédiat au contenu et reconnaît qu'il <b>perd son droit de rétractation</b> dès l'envoi du code (article L221-28 13° du Code de la consommation).</p>
+    <h3>7. Garantie et assistance</h3>
+    <p>Si le code ne fonctionne pas ou si un jeu ne s'affiche pas correctement, l'éditeur corrige le problème ou, à défaut, rembourse la commande. Contact : <a class="js-mail" href="#"></a>.</p>
+    <h3>8. Disponibilité</h3>
+    <p>L'éditeur s'efforce de maintenir les Jeux accessibles mais ne garantit pas une disponibilité continue. Les Jeux fonctionnent dans un navigateur récent ; les scores et les parties gratuites sont enregistrés sur l'appareil utilisé.</p>
+    <h3>9. Médiation et droit applicable</h3>
+    <p>Les présentes conditions sont soumises au droit français. En cas de litige, le client peut recourir gratuitement à un médiateur de la consommation : <span data-f="mediateur"></span>.</p>
+  </section>
+
+  <section class="card" id="confidentialite">
+    <h2>Politique de confidentialité</h2>
+    <h3>Données collectées</h3>
+    <ul>
+      <li><b>À l'achat</b> : ton prénom, ton nom et ton adresse mail, saisis dans le formulaire.</li>
+      <li><b>Sur ton appareil</b> : tes scores, tes réglages et le nombre de parties gratuites jouées sont enregistrés dans le navigateur (stockage local). Ils ne sont pas envoyés à l'éditeur.</li>
+      <li><b>Statistiques de visite</b> : si elles sont activées, le service GoatCounter compte les pages vues et les parties lancées. Il n'utilise aucun cookie et ne conserve pas d'identifiant permettant de te reconnaître.</li>
+    </ul>
+    <h3>Pourquoi</h3>
+    <p>Le nom et le mail servent uniquement à t'envoyer ton code de déblocage et à répondre à tes demandes d'assistance. Base légale : exécution du contrat. Rien n'est utilisé pour de la publicité ni transmis à des tiers, hors prestataires techniques (envoi du formulaire, paiement).</p>
+    <h3>Prestataires</h3>
+    <p>Web3Forms (acheminement du formulaire par mail), Mollie (paiement), GitHub (hébergement), GoatCounter (statistiques anonymes, si activées).</p>
+    <h3>Durée de conservation</h3>
+    <p>Les données de commande sont conservées le temps nécessaire à la livraison du code et à l'assistance, puis pendant la durée légale d'archivage des pièces comptables (10 ans pour les factures et justificatifs de paiement).</p>
+    <h3>Tes droits</h3>
+    <p>Tu peux demander l'accès, la rectification ou la suppression de tes données en écrivant à <a class="js-mail" href="#"></a>. Tu peux aussi saisir la CNIL (cnil.fr).</p>
+    <h3>Enfants</h3>
+    <p>Ces jeux s'adressent aux enfants, mais l'achat est réalisé par un parent ou un responsable légal. Aucun compte et aucune donnée personnelle ne sont demandés aux enfants.</p>
+  </section>
+  <p class="small">Dernière mise à jour : <span data-f="maj"></span></p>
+</div>
+
+<script>
+/* ===== Identité du vendeur : à compléter une fois ===== */
+var SELLER = {
+  nom:      'WG Conseil',
+  forme:    'société par actions simplifiée au capital de 1 000 €',
+  adresse:  '45 boulevard Gouvion-Saint-Cyr, 75017 Paris',
+  siret:    'SIREN 993 059 294, SIRET 993 059 294 00013',
+  tva:      'TVA intracommunautaire FR16 993 059 294',
+  tvaNote:  '',   // ex. 'TVA non applicable, art. 293 B du CGI' si franchise en base
+  dirpub:   'le président de la société (représentant légal)',
+  delai:    '24 heures ouvrées',
+  mediateur:'',   // nom et site du médiateur auquel ton activité est rattachée
+  maj:      '6 novembre 2026'
+};
+var CONTACT_EMAIL = 'wagramconseil15@gmail.com';
+var PRICE_LABEL = '4,99 €';
+
+(function () {
+  var missing = 0;
+  Array.prototype.forEach.call(document.querySelectorAll('[data-f]'), function (el) {
+    var k = el.getAttribute('data-f');
+    if (k === 'mail-link') { el.href = 'mailto:' + CONTACT_EMAIL; el.textContent = CONTACT_EMAIL; return; }
+    if (k === 'tva-ligne') {
+      var t = SELLER.tva || SELLER.tvaNote;
+      el.textContent = t ? t : '';
+      if (t) el.appendChild(document.createElement('br'));
+      return;
+    }
+    var v = SELLER[k];
+    if (v) el.textContent = v;
+    else { el.textContent = '[à compléter : ' + k + ']'; el.className = 'todo'; missing++; }
+  });
+  if (!SELLER.tva && !SELLER.tvaNote) { /* ligne TVA absente : rien à afficher */ }
+  document.getElementById('todo-note').hidden = missing === 0;
+  Array.prototype.forEach.call(document.querySelectorAll('.js-price'), function (e) { e.textContent = PRICE_LABEL; });
+  Array.prototype.forEach.call(document.querySelectorAll('.js-mail'), function (a) { a.href = 'mailto:' + CONTACT_EMAIL; a.textContent = CONTACT_EMAIL; });
+})();
+</script>
+<script src="stats.js"></script>
+</body>
+</html>
