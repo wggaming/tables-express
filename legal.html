@@ -69,7 +69,7 @@ nav.toc { display:flex; flex-wrap:wrap; gap:8px 16px; margin-bottom:16px; font-s
     <h3>8. Disponibilité</h3>
     <p>L'éditeur s'efforce de maintenir les Jeux accessibles mais ne garantit pas une disponibilité continue. Les Jeux fonctionnent dans un navigateur récent ; les scores et les parties gratuites sont enregistrés sur l'appareil utilisé.</p>
     <h3>9. Médiation et droit applicable</h3>
-    <p>Les présentes conditions sont soumises au droit français. En cas de litige, le client peut recourir gratuitement à un médiateur de la consommation : <span data-f="mediateur"></span>.</p>
+    <p>Les présentes conditions sont soumises au droit français.<span id="med-phrase" hidden> En cas de litige, le client peut recourir gratuitement à un médiateur de la consommation : <span data-f="mediateur"></span>.</span></p>
   </section>
 
   <section class="card" id="confidentialite">
@@ -123,8 +123,8 @@ var PRICE_LABEL = '4,99 €';
       return;
     }
     var v = SELLER[k];
-    if (v) el.textContent = v;
-    else { el.textContent = '[à compléter : ' + k + ']'; el.className = 'todo'; missing++; }
+    if (v) { el.textContent = v; if (k === 'mediateur') document.getElementById('med-phrase').hidden = false; }
+    else if (k !== 'mediateur') { el.textContent = ''; }
   });
   if (!SELLER.tva && !SELLER.tvaNote) { /* ligne TVA absente : rien à afficher */ }
   document.getElementById('todo-note').hidden = missing === 0;
