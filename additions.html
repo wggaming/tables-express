@@ -274,6 +274,7 @@ a.cta { display: block; text-align: center; text-decoration: none; }
     var left = Math.max(0, FREE_PLAYS - plays);
     var locked = !unlocked && left === 0;
     $('lock').hidden = !locked;
+    if (locked && !window.__lockSeen) { window.__lockSeen = true; setTimeout(function () { if (window.track) track('blocage-calcul'); }, 0); }
     $('start').hidden = locked;
     $('free').textContent = unlocked ? 'Version complète débloquée' : left + (left > 1 ? ' parties gratuites restantes' : ' partie gratuite restante') + ', puis ' + PRICE_LABEL + ' pour jouer sans limite';
     $('free').hidden = locked;
@@ -541,6 +542,7 @@ a.cta { display: block; text-align: center; text-decoration: none; }
 
   function endGame() {
     clearInterval(timer); G.over = true; G.locked = true;
+    if (window.track) track('fin-partie-calcul' + (unlocked ? '-payant' : '-gratuit'));
     sfx.end();
     var s = G.score;
     var f = START_TIME / 30;
@@ -570,7 +572,7 @@ a.cta { display: block; text-align: center; text-decoration: none; }
   }
 
   $('codeOk').onclick = function () {
-    if (tryUnlock($('code').value)) { $('codemsg').textContent = ''; sfx.ok(); }
+    if (tryUnlock($('code').value)) { $('codemsg').textContent = ''; if (window.track) track('code-ok-calcul'); sfx.ok(); }
     else { $('codemsg').textContent = 'Ce code ne fonctionne pas. Vérifie-le et réessaie.'; sfx.ko(); }
   };
   $('code').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('codeOk').click(); });
