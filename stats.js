@@ -8,6 +8,9 @@ function __send(name) { try { window.goatcounter.count({ path: name, title: name
 window.track = function (name) {
   if (window.goatcounter && window.goatcounter.count) __send(name); else __q.push(name);
 };
+/* Chaque site a son propre domaine : on préfixe les chemins pour garder les statistiques séparées dans le même compte. */
+window.goatcounter = window.goatcounter || {};
+window.goatcounter.path = function (p) { return '/tables-express' + (p === '/index.html' ? '/' : p); };
 (function () {
   if (!GOATCOUNTER_CODE) return;
   var s = document.createElement('script');
