@@ -217,6 +217,7 @@ a.cta { display: block; text-align: center; text-decoration: none; }
 
 <div class="countdown" id="cd" hidden></div>
 
+<script src="codes.js"></script>
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
@@ -225,29 +226,6 @@ a.cta { display: block; text-align: center; text-decoration: none; }
   var CONTACT_EMAIL = 'wagramconseil15@gmail.com';          // lien de paiement Stripe (Payment Link), à coller entre les guillemets
   var PRICE_LABEL = '4,99 €';    // prix affiché sur le bouton
   var FREE_PLAYS = 5;            // nombre de parties gratuites
-  var SECRET = '6YKJ37B9LDYP92Q8VVHA';
-  var REVOKED = [];   // codes désactivés : ajoute-les ici, entre guillemets, séparés par des virgules
-  var ALPHA = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  function cyrb53(str, seed) {
-    var h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
-    for (var i = 0, ch; i < str.length; i++) { ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }
-    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    return 4294967296 * (2097151 & h2) + (h1 >>> 0);
-  }
-  function checkPart(serial) {
-    var n = cyrb53(SECRET + ':' + serial, 7) % 33554432, s = '';
-    for (var i = 0; i < 5; i++) { s = ALPHA.charAt(n % 32) + s; n = Math.floor(n / 32); }
-    return s;
-  }
-  function isValidCode(raw) {
-    var c = String(raw).toUpperCase().replace(/[\s\-_.]/g, '');
-    var m = /^TE(\d{4})([A-Z0-9]{5})$/.exec(c);
-    if (!m) return false;
-    if (REVOKED.indexOf('TE-' + m[1] + '-' + m[2]) > -1) return false;
-    return m[2] === checkPart(m[1]);
-  }
-
   var cfg = load('ca-cfg', { t: 30, g: 2, b: 3 });
   var START_TIME = clamp(cfg.t, 10, 90, 30), GOOD = clamp(cfg.g, 0, 5, 2), BAD = clamp(cfg.b, 0, 10, 3), MAX_TIME = 99;
   function clamp(v, lo, hi, d) { v = Number(v); return isFinite(v) ? Math.min(hi, Math.max(lo, v)) : d; }
@@ -266,9 +244,7 @@ a.cta { display: block; text-align: center; text-decoration: none; }
   var unlocked = load('te-unlock', false) === true;
 
   function tryUnlock(raw) {
-    var c = String(raw || '').trim().toUpperCase();
-    if (c && isValidCode(c)) { unlocked = true; save('te-unlock', true); refreshAccess(); return true; }
-    return false;
+    return window.checkCode(raw).then(function (ok) { if (ok) { unlocked = true; save('te-unlock', true); refreshAccess(); } return ok; });
   }
   function refreshAccess() {
     var left = Math.max(0, FREE_PLAYS - plays);
@@ -572,8 +548,11 @@ a.cta { display: block; text-align: center; text-decoration: none; }
   }
 
   $('codeOk').onclick = function () {
-    if (tryUnlock($('code').value)) { $('codemsg').textContent = ''; if (window.track) track('code-ok-calcul'); sfx.ok(); }
-    else { $('codemsg').textContent = 'Ce code ne fonctionne pas. Vérifie-le et réessaie.'; sfx.ko(); }
+    $('codemsg').textContent = 'Vérification…';
+    tryUnlock($('code').value).then(function (ok) {
+      if (ok) { $('codemsg').textContent = ''; if (window.track) track('code-ok-calcul'); sfx.ok(); }
+      else { $('codemsg').textContent = 'Ce code ne fonctionne pas. Vérifie-le et réessaie.'; sfx.ko(); }
+    });
   };
   $('code').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('codeOk').click(); });
   try {
