@@ -371,13 +371,13 @@ footer a { text-underline-offset: 3px; }
 /* À régler avant la mise en ligne */
 var PAYMENT_URL = 'https://payment-links.mollie.com/payment/agDScFLzD3ujfdAKSewWo';  // lien de paiement Mollie
 var PRICE_LABEL = '4,99';      // prix affiché, sans le symbole €
-var CONTACT_EMAIL = 'wagramconseil15@gmail.com';  // adresse où écrire pour demander un code
+var CONTACT_EMAIL = 'matthieu@wagramconseil.fr';  // adresse où écrire pour demander un code
 
 (function () {
   Array.prototype.forEach.call(document.querySelectorAll('.js-price'), function (e) { e.textContent = PRICE_LABEL; });
   var buy = document.getElementById('buy');
   if (PAYMENT_URL) { buy.href = 'acheter.html'; buy.textContent = 'Débloquer les deux jeux'; }
-  else if (CONTACT_EMAIL) { buy.href = 'mailto:wagramconseil15@gmail.com?subject=Tables%20Express%20-%20demande%20de%20code&body=Bonjour%2C%0A%0AJe%20souhaite%20recevoir%20un%20code%20pour%20d%C3%A9bloquer%20Tables%20Express.%0A%0AMon%20pr%C3%A9nom%20%3A%20'; }
+  else if (CONTACT_EMAIL) { buy.href = 'mailto:matthieu@wagramconseil.fr?subject=Tables%20Express%20-%20demande%20de%20code&body=Bonjour%2C%0A%0AJe%20souhaite%20recevoir%20un%20code%20pour%20d%C3%A9bloquer%20Tables%20Express.%0A%0AMon%20pr%C3%A9nom%20%3A%20'; }
   else { buy.href = '#tarif'; }
   Array.prototype.forEach.call(document.querySelectorAll('.js-mail'), function (a) {
     if (CONTACT_EMAIL) { a.href = 'mailto:' + CONTACT_EMAIL; a.textContent = CONTACT_EMAIL; }
