@@ -12,9 +12,9 @@
   --display: "Baloo 2", "Trebuchet MS", system-ui, sans-serif; --body: "Nunito", system-ui, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) { --bg: #12153a; --card: #1d2252; --ink: #f1f3ff; --muted: #a9b0e0; --violet: #8f78ff; --coral: #ff7b7f; --mint: #3fd5a6; --line: #333a7a; --key: #272e68; color-scheme: dark; }
+  :root:not([data-theme="light"]) { --bg: #12153a; --card: #1d2252; --ink: #f1f3ff; --muted: #a9b0e0; --violet: #8f78ff; --coral: #ff7b7f; --cta: #d33b44; --mint: #3fd5a6; --line: #333a7a; --key: #272e68; color-scheme: dark; }
 }
-:root[data-theme="dark"] { --bg: #12153a; --card: #1d2252; --ink: #f1f3ff; --muted: #a9b0e0; --violet: #8f78ff; --coral: #ff7b7f; --mint: #3fd5a6; --line: #333a7a; --key: #272e68; color-scheme: dark; }
+:root[data-theme="dark"] { --bg: #12153a; --card: #1d2252; --ink: #f1f3ff; --muted: #a9b0e0; --violet: #8f78ff; --coral: #ff7b7f; --cta: #d33b44; --mint: #3fd5a6; --line: #333a7a; --key: #272e68; color-scheme: dark; }
 * { box-sizing: border-box; touch-action: manipulation; }
 [hidden] { display: none !important; }
 body {
@@ -35,13 +35,16 @@ input[type="text"], input[type="email"] { width: 100%; font: inherit; font-weigh
 input:focus-visible { outline: 3px solid var(--violet); outline-offset: 1px; }
 .check { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; font-weight: 600; color: var(--muted); margin: 4px 0 18px; }
 .check input { width: 22px; height: 22px; flex: none; margin-top: 2px; accent-color: var(--violet); }
-.btn { width: 100%; border: 0; cursor: pointer; background: var(--coral); color: #fff; font-family: var(--display); font-weight: 800; font-size: 24px; padding: 14px; border-radius: 16px; box-shadow: 0 5px 0 rgba(0,0,0,.2); }
+.btn { width: 100%; border: 0; cursor: pointer; background: var(--cta, var(--coral)); color: #fff; font-family: var(--display); font-weight: 800; font-size: 24px; padding: 14px; border-radius: 16px; box-shadow: 0 5px 0 rgba(0,0,0,.2); }
 .btn:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(0,0,0,.2); }
 .btn:disabled { opacity: .6; }
 .msg { min-height: 24px; margin-top: 12px; font-size: 15px; color: var(--coral); }
 .steps { margin: 18px 0 0; padding: 0 0 0 20px; color: var(--muted); font-size: 15px; display: grid; gap: 4px; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 </style>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="robots" content="noindex">
 </head>
 <body>
 <div class="wrap">
