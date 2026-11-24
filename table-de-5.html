@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Fiche « table de 5 » (lue par Google) : générée pour les tables 1 à 10, même modèle pour toutes. -->
+<title>Table de 5 : la table de multiplication de 5, astuces et jeu pour la réviser</title>
+<link rel="canonical" href="https://jeux.wagramconseil.fr/table-de-5.html">
+<meta name="description" content="La table de 5 de 1 à 10 (5, 10, 15, 20, 25, 30, 35, 40, 45, 50), une astuce pour la retenir et un jeu chronométré gratuit pour la réviser, du CE1 au CM2.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Jeux Express">
+<meta property="og:title" content="Table de 5 : astuces et jeu pour la réviser">
+<meta property="og:description" content="La table de 5 de 1 à 10 (5, 10, 15, 20, 25, 30, 35, 40, 45, 50), une astuce pour la retenir et un jeu chronométré gratuit pour la réviser, du CE1 au CM2.">
+<meta property="og:url" content="https://jeux.wagramconseil.fr/table-de-5.html">
+<meta property="og:image" content="https://jeux.wagramconseil.fr/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;700;800&display=swap">
+<style>
+:root {
+  --bg: #e9efff;
+  --card: #ffffff;
+  --ink: #1b2150;
+  --muted: #565e92;
+  --violet: #6c4dff;
+  --coral: #e8434a;
+  --sun: #ffc83d;
+  --mint: #12b886;
+  --line: #d5dcf5;
+  --key: #f3f5ff;
+  --display: "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
+  --body: "Nunito", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12153a; --card: #1d2252; --ink: #f1f3ff; --muted: #a9b0e0;
+    --violet: #8f78ff; --coral: #ff7b7f; --cta: #d33b44; --sun: #ffd25e; --mint: #3fd5a6;
+    --line: #333a7a; --key: #272e68; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12153a; --card: #1d2252; --ink: #f1f3ff; --muted: #a9b0e0;
+  --violet: #8f78ff; --coral: #ff7b7f; --cta: #d33b44; --sun: #ffd25e; --mint: #3fd5a6;
+  --line: #333a7a; --key: #272e68; color-scheme: dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:20px max(16px,env(safe-area-inset-left,0px)) 56px;display:flex;flex-direction:column;gap:20px}
+h1,h2{font-family:var(--display);line-height:1.1;margin:0}
+h1{font-size:clamp(34px,7vw,52px);font-weight:800}
+h1 span{color:var(--violet)}
+h2{font-size:26px;font-weight:800}
+p{margin:0}
+a{color:var(--violet)}
+.top{display:flex;justify-content:space-between;font-weight:700;font-size:15px}
+.top a{color:var(--muted);text-decoration:none}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.tbl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:8px 20px}
+.tbl li{display:flex;justify-content:space-between;font:800 24px var(--display);border-bottom:2px dashed var(--line);padding:4px 2px}
+.tbl b{color:var(--violet)}
+.btn{display:inline-flex;justify-content:center;align-items:center;font:800 20px var(--display);padding:14px 24px;border-radius:16px;background:var(--coral);color:#fff;text-decoration:none;box-shadow:0 5px 0 rgba(0,0,0,.18)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn{background:var(--cta)}}
+ul.tips{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+.other{display:flex;flex-wrap:wrap;gap:8px}
+.other a{font:800 18px var(--display);min-width:44px;text-align:center;padding:8px 10px;border-radius:12px;background:var(--key);border:2px solid var(--line);color:var(--ink);text-decoration:none}
+.other a[aria-current]{background:var(--violet);border-color:var(--violet);color:#fff}
+details{border-top:1px solid var(--line);padding-top:10px}
+summary{font-weight:800;cursor:pointer}
+details p{color:var(--muted);margin-top:6px}
+footer{text-align:center;font-size:13px;color:var(--muted)}
+footer a{color:inherit}
+@media (max-width:420px){.tbl{grid-template-columns:1fr}}
+</style>
+<script type="application/ld+json">
+[
+ {
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Table de 5",
+  "description": "La table de 5 de 1 à 10 (5, 10, 15, 20, 25, 30, 35, 40, 45, 50), une astuce pour la retenir et un jeu chronométré gratuit pour la réviser, du CE1 au CM2.",
+  "url": "https://jeux.wagramconseil.fr/table-de-5.html",
+  "inLanguage": "fr-FR",
+  "educationalLevel": "Primaire",
+  "learningResourceType": "Fiche de révision",
+  "teaches": "Table de multiplication de 5",
+  "isAccessibleForFree": true,
+  "isPartOf": {
+   "@type": "WebSite",
+   "name": "Jeux Express",
+   "url": "https://jeux.wagramconseil.fr/"
+  },
+  "publisher": {
+   "@type": "Organization",
+   "name": "WG Conseil",
+   "url": "https://wagramconseil.fr/"
+  }
+ },
+ {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+   {
+    "@type": "Question",
+    "name": "Quelle est la table de 5 ?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "La table de multiplication de 5 : 5 × 1 = 5 ; 5 × 2 = 10 ; 5 × 3 = 15 ; 5 × 4 = 20 ; 5 × 5 = 25 ; 5 × 6 = 30 ; 5 × 7 = 35 ; 5 × 8 = 40 ; 5 × 9 = 45 ; 5 × 10 = 50."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "Comment apprendre la table de 5 facilement ?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Les résultats finissent toujours par 0 ou 5 : 5, 10, 15, 20, 25, 30, 35, 40, 45, 50. Avec un nombre pair, le résultat finit par 0 ; avec un nombre impair, par 5."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "Quels sont les calculs les plus difficiles de la table de 5 ?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "5 × 7 = 35 et 5 × 9 = 45 : penser à l'horloge, 35 et 45 minutes."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "En quelle classe apprend-on la table de 5 ?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Les tables de 2 à 5 sont travaillées en CE1, les autres en CE2 ; la table de 5 est ensuite entretenue jusqu'au CM2."
+    }
+   }
+  ]
+ },
+ {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Jeux Express",
+    "item": "https://jeux.wagramconseil.fr/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Table de 5",
+    "item": "https://jeux.wagramconseil.fr/table-de-5.html"
+   }
+  ]
+ }
+]
+</script>
+</head>
+<body>
+<div class="wrap">
+  <nav class="top"><a href="index.html">← Jeux Express</a><a href="jeu.html?table=5">Jouer</a></nav>
+  <header style="display:flex;flex-direction:column;gap:10px">
+    <h1>La table de <span>5</span></h1>
+    <p style="color:var(--muted)">Les résultats finissent toujours par 0 ou 5 : 5, 10, 15, 20, 25, 30, 35, 40, 45, 50.</p>
+  </header>
+  <section class="card" aria-labelledby="t">
+    <h2 id="t">Table de multiplication de 5</h2>
+    <ul class="tbl"><li><span>5 × 1</span><b>5</b></li><li><span>5 × 2</span><b>10</b></li><li><span>5 × 3</span><b>15</b></li><li><span>5 × 4</span><b>20</b></li><li><span>5 × 5</span><b>25</b></li><li><span>5 × 6</span><b>30</b></li><li><span>5 × 7</span><b>35</b></li><li><span>5 × 8</span><b>40</b></li><li><span>5 × 9</span><b>45</b></li><li><span>5 × 10</span><b>50</b></li></ul>
+  </section>
+  <section class="card" style="align-items:flex-start">
+    <h2>S'entraîner sur la table de 5</h2>
+    <p>Dans Tables Express, l'enfant répond avant la fin du chrono : chaque bonne réponse redonne du temps. À la fin, les calculs ratés s'affichent pour être retravaillés. 5 parties gratuites, sans inscription.</p>
+    <a class="btn" href="jeu.html?table=5" id="play">Jouer avec la table de 5</a>
+  </section>
+  <section class="card">
+    <h2>Astuces pour la retenir</h2>
+    <ul class="tips"><li>Avec un nombre pair, le résultat finit par 0 ; avec un nombre impair, par 5.</li><li>5 × un nombre, c'est la moitié de 10 × ce nombre : 5 × 8 = 80 ÷ 2 = 40.</li><li><b>Le piège :</b> 5 × 7 = 35 et 5 × 9 = 45 : penser à l'horloge, 35 et 45 minutes.</li></ul>
+  </section>
+  <section class="card">
+    <h2>Questions des parents</h2>
+    <details><summary>Quelle est la table de 5 ?</summary><p>La table de multiplication de 5 : 5 × 1 = 5 ; 5 × 2 = 10 ; 5 × 3 = 15 ; 5 × 4 = 20 ; 5 × 5 = 25 ; 5 × 6 = 30 ; 5 × 7 = 35 ; 5 × 8 = 40 ; 5 × 9 = 45 ; 5 × 10 = 50.</p></details><details><summary>Comment apprendre la table de 5 facilement ?</summary><p>Les résultats finissent toujours par 0 ou 5 : 5, 10, 15, 20, 25, 30, 35, 40, 45, 50. Avec un nombre pair, le résultat finit par 0 ; avec un nombre impair, par 5.</p></details><details><summary>Quels sont les calculs les plus difficiles de la table de 5 ?</summary><p>5 × 7 = 35 et 5 × 9 = 45 : penser à l'horloge, 35 et 45 minutes.</p></details><details><summary>En quelle classe apprend-on la table de 5 ?</summary><p>Les tables de 2 à 5 sont travaillées en CE1, les autres en CE2 ; la table de 5 est ensuite entretenue jusqu'au CM2.</p></details>
+  </section>
+  <section class="card">
+    <h2>Les autres tables</h2>
+    <div class="other"><a href="table-de-1.html">1</a> <a href="table-de-2.html">2</a> <a href="table-de-3.html">3</a> <a href="table-de-4.html">4</a> <a href="table-de-5.html" aria-current="page">5</a> <a href="table-de-6.html">6</a> <a href="table-de-7.html">7</a> <a href="table-de-8.html">8</a> <a href="table-de-9.html">9</a> <a href="table-de-10.html">10</a></div>
+    <p style="font-size:15px;color:var(--muted)">Pour les additions et les soustractions : <a href="additions.html">Calcul Express</a>.</p>
+  </section>
+  <footer>© 2026 WG Conseil · <a href="index.html">Jeux Express</a> · <a href="legal.html">Mentions légales, CGV, confidentialité</a></footer>
+</div>
+<script src="stats.js"></script>
+<script>document.getElementById('play').addEventListener('click',function(){if(window.track) track('fiche-table-5-jouer');});</script>
+</body>
+</html>

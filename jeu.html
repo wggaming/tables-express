@@ -277,6 +277,8 @@ a.cta { display: block; text-align: center; text-decoration: none; }
   function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 
   var selected = load('te-tables', [2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  // jeu.html?table=7 (lien depuis les fiches table-de-N.html) : ne présélectionne que cette table
+  (function () { var m = location.search.match(/[?&]table=(10|[1-9])(?:&|$)/); if (m) selected = [+m[1]]; })();
   function bestKey() { return 'te-best-' + START_TIME + '-' + GOOD + '-' + BAD; }
   var best = load(bestKey(), 0);
   var soundOn = load('te-sound', true);
@@ -608,6 +610,7 @@ a.cta { display: block; text-align: center; text-decoration: none; }
   <p style="margin:10px 0 0">Tables Express fait réviser les tables de multiplication de 1 à 10 en parties de quelques secondes à quelques minutes. L'enfant choisit les tables à travailler, puis répond avant la fin du chrono : une bonne réponse redonne du temps, une erreur en retire.</p>
   <p style="margin:10px 0 0">À la fin de la partie, la liste des calculs ratés s'affiche avec leur résultat, pour savoir quoi retravailler. Le record personnel donne envie de rejouer. Idéal en CE1, CE2 et pour entretenir les tables jusqu'au CM2.</p>
   <p style="margin:10px 0 0">5 parties gratuites, sans compte ni publicité. Les scores restent sur l'appareil.</p>
+  <p style="margin:10px 0 0">Fiches et astuces par table : <a href="table-de-1.html" style="color:inherit">1</a> · <a href="table-de-2.html" style="color:inherit">2</a> · <a href="table-de-3.html" style="color:inherit">3</a> · <a href="table-de-4.html" style="color:inherit">4</a> · <a href="table-de-5.html" style="color:inherit">5</a> · <a href="table-de-6.html" style="color:inherit">6</a> · <a href="table-de-7.html" style="color:inherit">7</a> · <a href="table-de-8.html" style="color:inherit">8</a> · <a href="table-de-9.html" style="color:inherit">9</a> · <a href="table-de-10.html" style="color:inherit">10</a></p>
   <p style="margin:10px 0 0"><a href="index.html" style="color:inherit">Les deux jeux et les questions des parents</a></p>
 </details>
 <p style="text-align:center;font-size:13px;margin:18px 0 24px"><a href="legal.html" style="color:inherit;opacity:.7">Mentions légales, CGV, confidentialité</a></p>
