@@ -1,3 +1,14 @@
+# Tout le site est ouvert aux moteurs de recherche et aux assistants IA.
+# Google-Extended : autorise Gemini et les réponses IA de Google à s'appuyer sur le site.
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
 User-agent: *
 Allow: /
 
