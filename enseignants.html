@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Licence classe pour les enseignants | Jeux Express</title>
+<meta name="description" content="Tables Express et Calcul Express en illimité pour toute la classe : 19 € pour l'année scolaire 2026-2027, sans compte élève ni publicité.">
+<link rel="canonical" href="https://jeux.wagramconseil.fr/enseignants.html">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;700;800&display=swap">
+<style>
+:root {
+  --bg: #e9efff; --card: #ffffff; --ink: #1b2150; --muted: #565e92; --violet: #6c4dff;
+  --coral: #e8434a; --mint: #12b886; --line: #d5dcf5; --key: #f3f5ff;
+  --display: "Baloo 2", "Trebuchet MS", system-ui, sans-serif; --body: "Nunito", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #12153a; --card: #1d2252; --ink: #f1f3ff; --muted: #a9b0e0; --violet: #8f78ff; --coral: #ff7b7f; --cta: #d33b44; --mint: #3fd5a6; --line: #333a7a; --key: #272e68; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #12153a; --card: #1d2252; --ink: #f1f3ff; --muted: #a9b0e0; --violet: #8f78ff; --coral: #ff7b7f; --cta: #d33b44; --mint: #3fd5a6; --line: #333a7a; --key: #272e68; color-scheme: dark; }
+* { box-sizing: border-box; touch-action: manipulation; }
+[hidden] { display: none !important; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-weight: 600; font-size: 18px; line-height: 1.5;
+  padding-block: 20px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 480px; margin: 0 auto; }
+.back { display: inline-block; color: var(--muted); font-weight: 800; font-size: 15px; text-decoration: none; padding: 6px 0 12px; }
+.card { background: var(--card); border-radius: 24px; padding: 24px; box-shadow: 0 6px 0 var(--line); }
+h1 { font-family: var(--display); font-weight: 800; font-size: 34px; line-height: 1.1; margin: 0 0 6px; text-wrap: balance; }
+.lead { color: var(--muted); margin: 0 0 20px; }
+.price { display: flex; justify-content: space-between; align-items: baseline; background: var(--key); border-radius: 14px; padding: 12px 16px; margin-bottom: 20px; }
+.price b { font-family: var(--display); font-size: 28px; white-space: nowrap; margin-left: 12px; }
+label { display: block; font-weight: 800; margin-bottom: 4px; }
+input[type="text"], input[type="email"] { width: 100%; font: inherit; font-weight: 700; padding: 12px 14px; border-radius: 12px; border: 2px solid var(--line); background: var(--bg); color: var(--ink); margin-bottom: 14px; }
+input:focus-visible { outline: 3px solid var(--violet); outline-offset: 1px; }
+.check { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; font-weight: 600; color: var(--muted); margin: 4px 0 18px; }
+.check input { width: 22px; height: 22px; flex: none; margin-top: 2px; accent-color: var(--violet); }
+.btn { width: 100%; border: 0; cursor: pointer; background: var(--cta, var(--coral)); color: #fff; font-family: var(--display); font-weight: 800; font-size: 24px; padding: 14px; border-radius: 16px; box-shadow: 0 5px 0 rgba(0,0,0,.2); }
+.btn:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(0,0,0,.2); }
+.btn:disabled { opacity: .6; }
+.msg { min-height: 24px; margin-top: 12px; font-size: 15px; color: var(--coral); }
+.steps { margin: 18px 0 0; padding: 0 0 0 20px; color: var(--muted); font-size: 15px; display: grid; gap: 4px; }
+.perks { margin: 0 0 20px; padding: 0 0 0 20px; display: grid; gap: 6px; }
+.ok { color: var(--mint); font-size: 16px; font-weight: 800; }
+.opt { font-weight: 600; color: var(--muted); font-size: 15px; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+</style>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← Accueil</a>
+  <main class="card">
+    <h1>Licence classe</h1>
+    <p class="lead">Tables Express et Calcul Express en illimité pour toute votre classe, du CP au CM2.</p>
+    <div class="price"><span>Toute la classe, année scolaire 2026-2027</span><b id="price">19 €</b></div>
+
+    <ul class="perks">
+      <li>Un seul code pour tous les appareils de la classe : TBI, tablettes, salle informatique.</li>
+      <li>Aucun compte élève, aucune donnée sur les enfants, pas de publicité.</li>
+      <li>En classe : défi chrono au tableau, rituel de calcul mental, ateliers en autonomie. La difficulté se règle avant chaque partie.</li>
+      <li>Facture au nom de l'école sur simple demande.</li>
+    </ul>
+
+    <form id="form" novalidate>
+      <label for="nom">Prénom et nom</label>
+      <input id="nom" name="nom" type="text" autocomplete="name" required placeholder="Marie Dupont">
+
+      <label for="mail">Adresse mail</label>
+      <input id="mail" name="mail" type="email" autocomplete="email" inputmode="email" required placeholder="marie@exemple.fr">
+
+      <label for="ecole">École et ville <span class="opt">(facultatif)</span></label>
+      <input id="ecole" name="ecole" type="text" autocomplete="organization" placeholder="École Jules-Ferry, Lyon">
+
+      <input class="hp" type="text" id="botcheck" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <label class="check" for="ok" style="font-weight:600">
+        <input id="ok" type="checkbox" required>
+        <span>J'accepte que mon nom et mon adresse mail servent uniquement à m'envoyer mon code et ma facture (<a href="legal.html#confidentialite" target="_blank" rel="noopener">confidentialité</a>).</span>
+      </label>
+      <label class="check" for="ok2" style="font-weight:600">
+        <input id="ok2" type="checkbox" required>
+        <span>J'ai lu les <a href="legal.html#cgv" target="_blank" rel="noopener">conditions de vente</a>. Je demande l'accès immédiat à mon code et je renonce à mon droit de rétractation de 14 jours.</span>
+      </label>
+
+      <button class="btn" id="go" type="submit">Continuer vers le paiement</button>
+      <div class="msg" id="msg" role="status"></div>
+    </form>
+
+    <ol class="steps">
+      <li>Vous remplissez ce formulaire.</li>
+      <li>Vous payez sur la page sécurisée de Mollie.</li>
+      <li>Une fois le paiement reçu, votre code vous est envoyé par mail. Vous le tapez une fois sur chaque appareil de la classe.</li>
+    </ol>
+  </main>
+  <p style="text-align:center;font-size:15px;margin-top:16px">Envie d'essayer d'abord ? <a href="jeu.html" style="color:inherit">5 parties offertes par jeu</a>, sans inscription.</p>
+  <p style="text-align:center;font-size:13px;margin-top:8px"><a href="legal.html" style="color:inherit;opacity:.7">Mentions légales, CGV, confidentialité</a></p>
+</div>
+
+<script>
+/* Lien Mollie de la licence classe (19 €). Tant qu'il est vide, la demande est enregistrée et le lien de paiement est envoyé par mail. */
+var PAYMENT_URL = '';
+var PRICE_LABEL = '19 €';
+var CONTACT_EMAIL = 'matthieu@wagramconseil.fr';
+var FORM_KEY = '77a148e4-eed9-4a7d-8f58-e513b927e632';
+
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  $('price').textContent = PRICE_LABEL;
+  var busy = false;
+
+  $('form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (busy) return;
+    var nom = $('nom').value.trim(), mail = $('mail').value.trim(), ecole = $('ecole').value.trim();
+    var msg = $('msg');
+    msg.style.color = '';
+    if (nom.length < 3) { msg.textContent = 'Indiquez votre prénom et votre nom.'; $('nom').focus(); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail)) { msg.textContent = 'Cette adresse mail ne semble pas valide. Vérifiez-la.'; $('mail').focus(); return; }
+    if (!$('ok').checked || !$('ok2').checked) { msg.textContent = 'Cochez les deux cases pour continuer.'; return; }
+    if ($('botcheck').value) return;
+
+    busy = true; $('go').disabled = true; $('go').textContent = 'Un instant…'; msg.textContent = '';
+    if (window.track) track('enseignants-clic-commande');
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: FORM_KEY,
+        subject: 'Tables Express : licence classe (' + PRICE_LABEL + ')',
+        from_name: 'Tables Express',
+        name: nom,
+        email: mail,
+        message: 'Nouvelle demande de licence classe Tables Express.\nNom : ' + nom + '\nMail : ' + mail + '\nÉcole : ' + (ecole || 'non indiquée') + '\nConditions de vente et renonciation à la rétractation acceptées le ' + new Date().toLocaleString('fr-FR') + '.\n' + (PAYMENT_URL ? 'À envoyer dès réception du paiement de ' + PRICE_LABEL + '.' : 'Lien de paiement à envoyer par mail (' + PRICE_LABEL + '), puis le code.'),
+        botcheck: ''
+      })
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (!d || !d.success) throw new Error('fail');
+      if (window.track) track('enseignants-formulaire-envoye');
+      if (PAYMENT_URL) {
+        $('go').textContent = 'Redirection vers le paiement…';
+        window.location.href = PAYMENT_URL;
+      } else {
+        $('form').hidden = true;
+        msg.className = 'msg ok';
+        msg.textContent = 'Demande reçue, merci ! Le lien de paiement vous arrive par mail sous 24 h, puis votre code dès réception du paiement.';
+        $('form').parentNode.insertBefore(msg, $('form'));
+      }
+    }).catch(function () {
+      busy = false; $('go').disabled = false; $('go').textContent = 'Continuer vers le paiement';
+      msg.textContent = 'Votre demande n\'a pas pu être enregistrée. Réessayez, ou écrivez à ' + CONTACT_EMAIL + '.';
+    });
+  });
+})();
+</script>
+<script src="stats.js"></script>
+</body>
+</html>
