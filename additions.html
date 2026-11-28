@@ -175,6 +175,9 @@ a.cta { display: block; text-align: center; text-decoration: none; }
 .review li { background: var(--key); border-radius: 12px; padding: 6px 12px; font-family: var(--display); font-weight: 800; font-size: 20px; }
 .review li em { font-style: normal; color: var(--coral); }
 .btns { display: grid; gap: 10px; }
+#share { width: 100%; margin-top: 10px; }
+.teach { text-align: center; font-size: 15px; margin: 12px 0 0; opacity: .85; }
+.teach a { color: inherit; font-weight: 700; }
 .btn2 { background: var(--key); border-radius: 18px; padding: 12px; font-family: var(--display); font-weight: 800; font-size: 20px; box-shadow: 0 4px 0 var(--line); }
 .mute { position: absolute; right: 0; top: 0; background: var(--key); border-radius: 12px; padding: 6px 10px; font-size: 14px; font-weight: 800; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
@@ -257,6 +260,8 @@ a.cta { display: block; text-align: center; text-decoration: none; }
       <button class="btn2" id="toMenu" type="button">Changer de niveau</button>
       <a class="btn2" href="index.html">Retour à l'accueil</a>
     </div>
+    <button class="btn2" id="share" type="button">Partager mon score</button>
+    <p class="teach">Enseignant ? <a href="enseignants.html?utm_source=jeu&amp;utm_medium=fin-partie&amp;utm_campaign=jeux-enseignants" onclick="if(window.track)track('fin-partie-clic-enseignants')">Licence classe pour toute l'année</a></p>
   </section>
 </div>
 
@@ -621,4 +626,18 @@ a.cta { display: block; text-align: center; text-decoration: none; }
 </details>
 <p style="text-align:center;font-size:13px;margin:18px 0 24px"><a href="legal.html" style="color:inherit;opacity:.7">Mentions légales, CGV, confidentialité</a></p>
 <script src="stats.js"></script>
+<script>
+/* Partage du score : feuille de partage du téléphone, sinon WhatsApp. */
+(function () {
+  var b = document.getElementById('share'); if (!b) return;
+  b.addEventListener('click', function () {
+    var score = (document.getElementById('final') || {}).textContent || '0';
+    var url = 'https://jeux.wagramconseil.fr/?utm_source=partage&utm_medium=score&utm_campaign=jeux-calcul';
+    var text = 'J\'ai fait ' + score + ' points à Calcul Express ! Tu me bats ?';
+    if (window.track) track('partage-score-calcul');
+    if (navigator.share) { navigator.share({ title: 'Calcul Express', text: text, url: url }).catch(function () {}); }
+    else { window.open('https://wa.me/?text=' + encodeURIComponent(text + ' ' + url), '_blank', 'noopener'); }
+  });
+})();
+</script>
 </body></html>
